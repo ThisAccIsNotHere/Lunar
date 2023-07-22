@@ -10961,7 +10961,19 @@ runFunction(function()
 		["Name"] = "Pack",
 		["Function"] = function() end,
 		["List"] = {"GlizzyPack", "FirstPack", "SecondPack", "ThirdPack", "FourthPack", "FifthPack", "SixthPack", "SeventhPack","EighthPack", "EgirlPack"}
-	}
+	})
+end)
+
+runFunction(function()
+	CustomKeystokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "Keystokes",
+		Function = function(callback)
+			if callback then 
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/Keystrokes"))()
+			end
+		end
+	})
+end)
 
 runFunction(function()
 	local transformed = false
