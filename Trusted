@@ -10812,34 +10812,6 @@ STPD = SkyTP.CreateSlider({
     ["Default"] = 196
 })
 
-local LunarPurpleAmbience = {["Enabled"] = false}
-LunarPurpleAmbience = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
-	["Name"] = "LunarPurpleAmbience",
-	["Function"] = function(callback)
-		if callback then
-			local Lighting = game:GetService("Lighting")
-Lighting.Ambient = Color3.fromRGB(111, 43, 150)
-Lighting.ColorShift_Bottom = Color3.fromRGB(111, 43, 150)
-Lighting.ColorShift_Top = Color3.fromRGB(111, 43, 150)
-Lighting.OutdoorAmbient = Color3.fromRGB(111, 43, 150)
-Lighting.ColorShift_Bottom = Color3.fromRGB(111, 43, 150)
-Lighting.ColorShift_Top = Color3.fromRGB(111, 43, 150)
-
-local s = Instance.new("Sky")
-s.Name = "loltroll"
-s.SkyboxBk = "http://www.roblox.com/asset/?id=1045964490"
-s.SkyboxDn = "http://www.roblox.com/asset/?id=1045964368"
-s.SkyboxFt = "http://www.roblox.com/asset/?id=1045964655"
-s.SkyboxLf = "http://www.roblox.com/asset/?id=1045964655"
-s.SkyboxRt = "http://www.roblox.com/asset/?id=1045964655"
-s.SkyboxUp = "http://www.roblox.com/asset/?id=1045962969"
-s.Parent = Lighting
-			else
-		createwarning("Lunar", "Join A New Match To Reset Skybox And Ambience.", 3)
-		end
-	end
-})
-
 runFunction(function()
 	local transformed = false
 	local TexturePacks = {["Enabled"] = false}
