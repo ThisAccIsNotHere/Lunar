@@ -10672,4 +10672,4 @@ s.Parent = Lighting
 })
 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/hi/main/chattag", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/chattags", true))()
