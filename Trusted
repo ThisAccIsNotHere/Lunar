@@ -11002,4 +11002,28 @@ runFunction(function()
 	})
 end)
 
+local allowed_hwids = {
+    "", --
+    "", --
+    "", --
+    "", --
+    "", --
+    "", --
+    "", --
+}
+
+local player_hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+local is_hwid_allowed = false
+for i, v in pairs(allowed_hwids) do
+    if v == player_hwid then
+        is_hwid_allowed = true
+        break
+    end
+end
+
+if not is_hwid_allowed then
+    game.Players.LocalPlayer:Kick("Not WhiteListed To Bad")
+end
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/chattags", true))()
