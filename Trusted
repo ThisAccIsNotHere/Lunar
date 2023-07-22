@@ -10517,6 +10517,22 @@ DragonBreathFunny = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].C
 end)
 
 runFunction(function()
+local PartyPopperFunny = {Enabled = false}
+PartyPopperFunny = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+	Name = "PartyPopper",
+	Function = function(callback)
+		if callback then 
+			task.spawn(function()	
+				repeat task.wait(0.3) 
+				replicatedStorageService["events-@easy-games/game-core:shared/game-core-networking@getEvents.Events"].useAbility:FireServer("PARTY_POPPER")
+				until (not PartyPopperFunny.Enabled)
+			end)
+		end
+	end
+})
+end)
+
+runFunction(function()
 local fpsunlocker = {Enabled = false}
 fpsunlocker = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
 Name = "FPS Unlocker",
@@ -10565,7 +10581,171 @@ end
 })
 end)
 
-local Messages = {"LUNAR PURPLE ON TOP",  "FOLD", ":TROLL:"}
+runFunction(function()
+local ban = {Enabled = false}
+ban = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
+Name = "Bannded",
+Function = function(callback)
+if callback then
+  getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true)["FireServer"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true), "injection_detected")
+ban["ToggleButton"](false)
+end
+end
+})
+end)
+
+runFunction(function() -- s/o scrxpted
+local Headless = {Enabled = false}
+local oldface
+local function applyHeadless()
+	repeat task.wait() until entityLibrary.isAlive or not Headless.Enabled
+	if entityLibrary.isAlive and Headless.Enabled then
+		entityLibrary.character.Head.Transparency = 1
+		local face = entityLibrary.character.Head:FindFirstChild("face")
+		if face then
+			oldface = face
+			face.Parent = game
+		end
+	end
+end
+
+Headless = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
+	Name = "Headless",
+	Function = function(callback)
+		if callback then
+			table.insert(Headless.Connections, lplr.CharacterAdded:Connect(applyHeadless))
+			task.spawn(applyHeadless)
+		else
+			if entityLibrary.isAlive then
+				entityLibrary.character.Head.Transparency = 0
+				if oldface then
+					oldface.Parent = entityLibrary.character.Head
+				end
+			end
+		end
+	end
+})
+end)
+
+runFunction(function()
+    local transparency2 = 0.5
+    local transparent
+
+    local GuiLibrary = shared.GuiLibrary
+    local feinvis = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
+        Name = "invis",
+        Function = function(callback)
+            if callback then
+                task.spawn(function()
+                    repeat task.wait() until matchState ~= 0
+                    local player = game:GetService("Players").LocalPlayer
+                    local character = player.Character
+                    if character then
+                        local head = character.Head
+                        local leftFoot = character.LeftFoot
+                        local leftHand = character.LeftHand
+                        local leftLowerArm = character.LeftLowerArm
+                        local leftLowerLeg = character.LeftLowerLeg
+                        local leftUpperArm = character.LeftUpperArm
+                        local leftUpperLeg = character.LeftUpperLeg
+                        local lowerTorso = character.LowerTorso
+                        local rightFoot = character.RightFoot
+                        local rightHand = character.RightHand
+                        local rightLowerArm = character.RightLowerArm
+                        local rightLowerLeg = character.RightLowerLeg
+                        local rightUpperArm = character.RightUpperArm
+                        local rightUpperLeg = character.RightUpperLeg
+                        local upperTorso = character.UpperTorso
+                        transparent = true
+                        repeat task.wait()
+                            head.LocalTransparencyModifier = transparency2
+                            leftFoot.LocalTransparencyModifier = transparency2
+                            leftHand.LocalTransparencyModifier = transparency2
+                            leftLowerArm.LocalTransparencyModifier = transparency2
+                            leftLowerLeg.LocalTransparencyModifier = transparency2
+                            leftUpperArm.LocalTransparencyModifier = transparency2
+                            leftUpperLeg.LocalTransparencyModifier = transparency2
+                            lowerTorso.LocalTransparencyModifier = transparency2
+                            rightFoot.LocalTransparencyModifier = transparency2
+                            rightHand.LocalTransparencyModifier = transparency2
+                            rightLowerArm.LocalTransparencyModifier = transparency2
+                            rightLowerLeg.LocalTransparencyModifier = transparency2
+                            rightUpperArm.LocalTransparencyModifier = transparency2
+                            rightUpperLeg.LocalTransparencyModifier = transparency2
+                            upperTorso.LocalTransparencyModifier = transparency2
+                        until transparent == false
+                    end
+                end)
+            else
+                transparent = false
+            end
+        end,
+    })
+
+    local player = game:GetService("Players").LocalPlayer
+    local character = player.Character
+
+    local function removeFace()
+        local head = character:FindFirstChild("Head")
+        if head then
+            local face = head:FindFirstChildOfClass("Decal")
+            if face then
+                face:Destroy()
+            end
+        end
+    end
+
+    removeFace()
+end)
+
+runFunction(function()
+    local hasTeleported = false
+    local TweenService = game:GetService("TweenService")
+
+    function findNearestBed()
+        local nearestBed = nil
+        local minDistance = math.huge
+        
+        for _,v in pairs(game.Workspace:GetDescendants()) do
+            if v.Name:lower() == "bed" and v:FindFirstChild("Covers") and v:FindFirstChild("Covers").BrickColor ~= lplr.Team.TeamColor then
+                local distance = (v.Position - lplr.Character.HumanoidRootPart.Position).magnitude
+                if distance < minDistance then
+                    nearestBed = v
+                    minDistance = distance
+                end
+            end
+        end
+        return nearestBed
+    end
+    function tweenToNearestBed()
+        local nearestBed = findNearestBed()
+        if nearestBed and not hasTeleported then
+            hasTeleported = true
+
+            local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0)
+            
+			local tween = TweenService:Create(lplr.Character.HumanoidRootPart, TweenInfo.new(0.94), {CFrame = nearestBed.CFrame + Vector3.new(0, 2, 0)})
+            tween:Play()
+        end
+    end
+    BedTp = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+        Name = "Lunar's Bedtp",
+        Function = function(callback)
+            if callback then
+                lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+                lplr.CharacterAdded:Connect(function()
+                    wait(0.3) 
+                    tweenToNearestBed()
+                end)
+                hasTeleported = false
+                BedTp["ToggleButton"](false)
+            end
+        end,
+        ["HoverText"] = "BedTp Lano"
+    })
+end)
+
+local Messages = {"disc.gg/xsFYYPnnas",  "FOLD", ":TROLL:"}
 local old
 local FunnyIndicator = {Enabled = false}
 FunnyIndicator = GuiLibrary.ObjectsThatCanBeSaved.WorldWindow.Api.CreateOptionsButton({
@@ -10631,17 +10811,6 @@ STPD = SkyTP.CreateSlider({
     ["Function"] = function(val) end,
     ["Default"] = 196
 })
-
-runFunction(function()
-	PurpleHealthBar = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "PurpleHealthBar",
-		Function = function(callback)
-			if callback then 
-				debug.setconstant(require(lplr.PlayerScripts.TS.controllers.global.hotbar.ui.healthbar["hotbar-healthbar"]).HotbarHealthbar.render, 16, 9662683)
-			end
-		end
-	})
-end)
 
 local LunarPurpleAmbience = {["Enabled"] = false}
 LunarPurpleAmbience = GuiLibrary["ObjectsThatCanBeSaved"]["RenderWindow"]["Api"].CreateOptionsButton({
