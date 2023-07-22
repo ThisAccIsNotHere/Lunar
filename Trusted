@@ -10964,17 +10964,6 @@ runFunction(function()
 	}
 
 runFunction(function()
-	SnoopyKeystokes = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "SnoopyKeystokes",
-		Function = function(callback)
-			if callback then 
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/ThisAccIsNotHere/Lunar/main/Keystrokes"))()
-			end
-		end
-	})
-end)
-
-runFunction(function()
 	local transformed = false
 	local GameThemeV2 = {["Enabled"] = false}
 	local themeselected = {["Value"] = "OldBedwars"}
