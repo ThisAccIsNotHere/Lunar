@@ -11295,7 +11295,7 @@ runFunction(function()
     end
 
     PlayerTp = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "PlayerTP",
+        Name = "PlayerTP v2",
         Function = function(callback)
             if callback then
                 lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
